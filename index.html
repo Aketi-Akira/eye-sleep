@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,46 +8,24 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/app.css" />
     <link rel="stylesheet" href="MyPomodoro.styles.css" />
-    <link rel="icon" type="image/png" href="favicon.png" />
 </head>
-
 <body>
     <div id="app">
-        <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif;">
-            <div class="loading-progress-text">読み込み中...</div>
-        </div>
+        <div style="display:flex;justify-content:center;align-items:center;height:100vh;">読み込み中...</div>
     </div>
-
-    <div id="blazor-error-ui" style="display:none;">
-        エラーが発生しました。
-        <a href="" class="reload">再読み込み</a>
-        <span class="dismiss">🗙</span>
-    </div>
-
-    <script src="_framework/blazor.webassembly.js"></script>
-
-    <script>     
-        //通知の許可を求める
-         window.requestNotificationPermission = async () => {
-            return await Notification.requestPermission();
-        };
-        //通知を出す
-        window.showNotification = (title, body) => {
-            new Notification(title,{ body: body});
-        };
-        // 音を鳴らす
-        window.playNotificationSound = () => {
-            const audio = new Audio('sounds/maou_se_onepoint08.mp3');
-            audio.play().catch(e => console.error(e));
-        };
-        // localStorage
-        window.saveToStorage = (Key, value) => {
-            localStorage.setItem(Key, value);
-        };
-        window.loadFromStorage = (Key) => {
-            return localStorage.getItem(Key);
-        }
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+    <script>
+        // 通知・音・ストレージのスクリプト（以前と同じなので省略せずそのまま残してください）
+        window.requestNotificationPermission = async () => { return await Notification.requestPermission(); };
+        window.showNotification = (title, body) => { new Notification(title,{ body: body}); };
+        window.playNotificationSound = () => { const audio = new Audio('sounds/maou_se_onepoint08.mp3'); audio.play().catch(e => console.error(e)); };
+        window.saveToStorage = (Key, value) => { localStorage.setItem(Key, value); };
+        window.loadFromStorage = (Key) => { return localStorage.getItem(Key); };
+        
+        // Blazorを強制起動
+        import('./_framework/blazor.webassembly.js').then(res => {
+            Blazor.start();
+        });
     </script>
 </body>
-
 </html>
